@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 import { PokemonOption } from '../models/PokemonOption';
 import { Pokemon } from '../models/Pokemon';
 import PokemonDropdown from '../components/PokemonDropdown/PokemonDropdown';
+import PokemonCard from '../components/PokemonCard/PokemonCard';
 
 type Props = {
   initialOptions: PokemonOption[];
@@ -42,8 +43,15 @@ const Home: NextPage<Props> = ({ initialOptions }) => {
               </div>
             </div>
             <div className="flex items-center justify-center w-full mt-2 lg:h-96 lg:w-1/2">
-              <img className="object-cover w-full max-w-2xl rounded-md lg:h-full"
-                src="https://source.unsplash.com/user/erondu/1600x900" alt="apple watch photo" />
+              <div className="bg-purple-400 max-w-sm rounded overflow-hidden shadow-lg">
+                {selectedPokemon ?
+                  <PokemonCard selectedPokemon={selectedPokemon}/> 
+                  :
+                  <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2">Please choose a Pokemon</div>
+                  </div>
+                }
+              </div>
             </div>
           </div>
         </div>

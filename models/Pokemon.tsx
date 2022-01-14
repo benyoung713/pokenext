@@ -1,11 +1,15 @@
 export type Pokemon = {
     name: string,
-    base_experience: number,
     height: number,
     weight: number,
-    moves: Move[],
+    moves: MoveContainer[],
     types: Type[],
     stats: StatBase[],
+    sprites: Sprites,
+}
+
+type MoveContainer = {
+    move: Move
 }
 
 type Move = {
@@ -29,4 +33,9 @@ type StatBase = {
 
 type Stat = {
     name: string,
+}
+
+type Sprites = {
+    front_default: string,
+    front_shiny: string
 }
