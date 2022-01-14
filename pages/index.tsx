@@ -2,7 +2,7 @@ import type { NextPage, GetServerSideProps } from 'next';
 import { useState } from 'react';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
-import { PokemonOption } from '../models/PokemonOption';
+import { PokemonOption, PokemonListResult } from '../models/PokemonOption';
 import { Pokemon } from '../models/Pokemon';
 import PokemonDropdown from '../components/PokemonDropdown/PokemonDropdown';
 import PokemonCard from '../components/PokemonCard/PokemonCard';
@@ -85,8 +85,9 @@ const Home: NextPage<Props> = ({ initialOptions }) => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await fetch(process.env.BASE_URL + 'api/pokemon/');
-  const initialOptions: PokemonOption[] = await response.json();
+  const response = await fetch(process.env.API_ENDPOINT);
+  const pokemon: PokemonListResult = await response.json();
+  const initialOptions: PokemonOption[] = pokemon.results;
   return {
     props: {
       initialOptions
