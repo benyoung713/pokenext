@@ -6,7 +6,11 @@ export default async function handler(
   res: NextApiResponse<PokemonOption[]>
 ) {
   const { offset } = req.query;
-  const result: Response = await fetch(process.env.API_ENDPOINT + (Boolean(offset) ? `?offset=${offset}` : ''));
-  const pokemon: PokemonListResult = await result.json();
-  res.status(200).json(pokemon.results);
+  try {
+    const result: Response = await fetch(process.env.API_ENDPOINT + (Boolean(offset) ? `?offset=${offset}` : ''));
+    const pokemon: PokemonListResult = await result.json();
+    res.status(200).json(pokemon.results);
+  } catch {
+    res.status(500);
+  }
 }
