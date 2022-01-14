@@ -13,12 +13,25 @@ type Props = {
 
 const Home: NextPage<Props> = ({ initialOptions }) => {
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | undefined>(undefined);
+  const [optionsList, setOptionsList] = useState<PokemonOption[]>(initialOptions);
+  const [menuOffset, setOffset] = useState<number>(40);
 
   const getPokemonInfo = async (name: string): Promise<void> => {
     try {
       const result = await fetch(`/api/pokemon/${name}`);
       const chosenPokemon: Pokemon = await result.json();
       setSelectedPokemon(chosenPokemon);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const getMoreOptions = async (): Promise<void> => {
+    try {
+      const response = await fetch(`/api/pokemon?offset=${menuOffset}`);
+      const moreOptions = await response.json();
+      setOptionsList([...optionsList, ...moreOptions]);
+      setOffset(menuOffset + 20);
     } catch (err) {
       console.error(err);
     }
@@ -38,7 +51,11 @@ const Home: NextPage<Props> = ({ initialOptions }) => {
                   Select a Pokemon from the dropdown below to see some details about them
                 </p>
                 <div className="mt-6">
-                  <PokemonDropdown options={initialOptions} select={getPokemonInfo} />
+                  <PokemonDropdown
+                    options={optionsList}
+                    select={getPokemonInfo}
+                    loadMore={getMoreOptions}
+                  />
                 </div>
               </div>
             </div>

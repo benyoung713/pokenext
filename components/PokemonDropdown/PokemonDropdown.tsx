@@ -2,12 +2,24 @@ import { PokemonOption } from "../../models/PokemonOption";
 
 type PokemonDropdownProps = {
     options: PokemonOption[],
-    select: Function
+    select: Function,
+    loadMore: Function,
 }
 
-const PokemonDropdown = ({ options, select }: PokemonDropdownProps) => (
+const load_more = "load_more";
+
+const PokemonDropdown = ({ options, select, loadMore }: PokemonDropdownProps) => {
+
+    const onSelect = async (value: string) : Promise<void> => {
+        if(value === load_more)
+            await loadMore();
+        else
+            await select(value);
+    }
+
+    return (
     <select
-        onChange={(e) => select(e.target.value)}
+        onChange={(e) => onSelect(e.target.value)}
         className="form-select appearance-none
         block
         w-full
@@ -23,9 +35,11 @@ const PokemonDropdown = ({ options, select }: PokemonDropdownProps) => (
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-        <option selected>Choose a Pokemon</option>
+        <option selected disabled>Choose a Pokemon</option>
         {options.map(x => <option className="capitalize" key={x.name} value={x.name}>{x.name}</option>)}
+        <option value={load_more}>Load more...</option>
     </select>
 );
+}
 
 export default PokemonDropdown;
