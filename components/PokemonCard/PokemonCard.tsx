@@ -16,14 +16,14 @@ const PokemonCard = ({ selectedPokemon }: PokemonCardProps) => (
         <div className="grid grid-cols-1 divide-y divide-black">
             <div className="font-bold text-l mb-2">
                 Types: {selectedPokemon.types.map((x, i) =>
-                (<span className="capitalize">
+                (<span key={x.type.name} className="capitalize">
                     {x.type.name + (i !== selectedPokemon.types.length - 1 ? ', ' : '')}
                 </span>
                 ))}
             </div>
             <div className="font-bold text-l mb-2">
                 Moves: {selectedPokemon.moves.slice(0, 3).map((x, i) =>
-                (<span className="capitalize">
+                (<span key={x.move.name} className="capitalize">
                     {x.move.name + (i !== 2 ? ', ' : '')}
                 </span>
                 ))}
