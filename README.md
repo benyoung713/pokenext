@@ -18,3 +18,8 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+There are obviously some areas for improvement: 
+- I don't deal with errors at all. So some sort of snackbar which shows error messages would be good.
+- I don't deal with loading states; some sort of hook which performs the http requests would be a good way of dealing with this.
+- The dropdown doesn't reset after choosing 'Load more'; it would be better if the dropdown reverted back to the default
