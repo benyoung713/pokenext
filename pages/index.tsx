@@ -45,7 +45,7 @@ const Home: NextPage<Props> = ({ initialOptions }) => {
             <div className="flex items-center justify-center w-full mt-2 lg:h-96 lg:w-1/2">
               <div className="bg-purple-400 max-w-sm rounded overflow-hidden shadow-lg">
                 {selectedPokemon ?
-                  <PokemonCard selectedPokemon={selectedPokemon}/> 
+                  <PokemonCard selectedPokemon={selectedPokemon} />
                   :
                   <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">Please choose a Pokemon</div>
@@ -58,16 +58,10 @@ const Home: NextPage<Props> = ({ initialOptions }) => {
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        Powered by{' '}
+        <span className={styles.logo}>
+          <Image src="/pokeball.jpg" alt="Pokemon logo" width={72} height={72} />
+        </span>
       </footer>
     </div>
   )
