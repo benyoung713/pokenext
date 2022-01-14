@@ -1,10 +1,28 @@
-import type { NextPage, GetServerSideProps } from 'next'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage, GetServerSideProps } from 'next';
+import { useState } from 'react';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
 import { PokemonOption } from '../models/PokemonOption';
+import { Pokemon } from '../models/Pokemon';
 import PokemonDropdown from '../components/PokemonDropdown/PokemonDropdown';
 
-const Home: NextPage = () => {
+type Props = {
+  initialOptions: PokemonOption[];
+}
+
+const Home: NextPage<Props> = ({ initialOptions }) => {
+  const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | undefined>(undefined);
+
+  const getPokemonInfo = async (name: string): Promise<void> => {
+    try {
+      const result = await fetch(`/api/pokemon/${name}`);
+      const chosenPokemon: Pokemon = await result.json();
+      setSelectedPokemon(chosenPokemon);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -19,7 +37,7 @@ const Home: NextPage = () => {
                   Select a Pokemon from the dropdown below to see some details about them
                 </p>
                 <div className="mt-6">
-                  <PokemonDropdown options={[{name: "Pokemon", url: "http://"}]} />
+                  <PokemonDropdown options={initialOptions} select={getPokemonInfo} />
                 </div>
               </div>
             </div>
@@ -48,7 +66,7 @@ const Home: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await fetch('http://localhost:3000/api/pokemon/');
+  const response = await fetch(process.env.BASE_URL + 'api/pokemon/');
   const initialOptions: PokemonOption[] = await response.json();
   return {
     props: {

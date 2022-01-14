@@ -6,7 +6,7 @@ export default async function handler(
   res: NextApiResponse<Pokemon>
 ) {
   const { name } = req.query;
-  const result: Response = await fetch('https://pokeapi.co/api/v2/pokemon/' + name);
+  const result: Response = await fetch(process.env.API_ENDPOINT + name);
   const pokemon: Pokemon = await result.json();
   res.status(200).json(pokemon);
 }

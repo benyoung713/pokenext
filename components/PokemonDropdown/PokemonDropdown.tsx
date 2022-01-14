@@ -1,13 +1,14 @@
 import { PokemonOption } from "../../models/PokemonOption";
 
 type PokemonDropdownProps = {
-    options: PokemonOption[]
+    options: PokemonOption[],
+    select: Function
 }
 
-const PokemonDropdown = ({ options }: PokemonDropdownProps) => {
-
-    return (
-        <select className="form-select appearance-none
+const PokemonDropdown = ({ options, select }: PokemonDropdownProps) => (
+    <select
+        onChange={(e) => select(e.target.value)}
+        className="form-select appearance-none
         block
         w-full
         px-3
@@ -22,10 +23,9 @@ const PokemonDropdown = ({ options }: PokemonDropdownProps) => {
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none">
-            <option selected>Choose a Pokemon</option>
-            {options.map(x => <option className="capitalize" key={x.name} value={x.name}>{x.name}</option>)}
-        </select>
-    );
-}
+        <option selected>Choose a Pokemon</option>
+        {options.map(x => <option className="capitalize" key={x.name} value={x.name}>{x.name}</option>)}
+    </select>
+);
 
 export default PokemonDropdown;
