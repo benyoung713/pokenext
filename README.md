@@ -7,6 +7,8 @@ This will load more Pokemon into the menu.
 
 The app runs on NextJS and is styled using TailWindCSS
 
+The app can be found at https://pokenext-benyoung713.vercel.app/
+
 To run the project, pull the repo to your preferred location
 
 Run the following commands:
